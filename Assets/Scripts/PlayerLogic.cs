@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerLogic : MonoBehaviour
@@ -43,6 +41,8 @@ public class PlayerLogic : MonoBehaviour
 		_movementController.CanMove = false;
 		_pattern1.enabled = false;
 		_pattern2.enabled = false;
+
+		MenuManager.Instance.LoadGameOverMenu(delay: 1);
 	}
 
 	private void OnHealed()
