@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5821338908451407741
 Transform:
   m_ObjectHideFlags: 0
@@ -164,15 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09be4876d8d0426468a39406eb9b2b4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shouldToggleActiveness: 1
-  _onReclaimed:
-    m_PersistentCalls:
-      m_Calls: []
-  _onRequested:
-    m_PersistentCalls:
-      m_Calls: []
   <Speed>k__BackingField: 10
-  <SizeMod>k__BackingField: 1
+  _sizeMod: 1
   <Range>k__BackingField: 10
   <Lifetime>k__BackingField: -1
   <Penetration>k__BackingField: 0
@@ -182,6 +175,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   <ArtRoot>k__BackingField: {fileID: 5821338906648017354}
+  _elapsedTime: 0
+  _elapsedRange: 0
+  _numImpacts: 0
   _rb2d: {fileID: 792241305211101039}
 --- !u!50 &792241305211101039
 Rigidbody2D:

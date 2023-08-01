@@ -103,9 +103,10 @@ public class KnifeFiringPattern : FiringPattern
 			{
 				var aimPoint = FireOrigin.GetChild(i);
 
-				var projectile = ObjectPool.Instance.RequestInstance<Projectile>(_projectilePrefab, 
+				var projectile = ObjectPool.Instance.RequestObject(
+					_projectilePrefab.gameObject, 
 					desiredPosition: aimPoint.position, 
-					desiredRight: aimPoint.right);
+					desiredDirection: aimPoint.right).GetComponent<Projectile>();
 				//projectile.InheritedVelocity = _rb2d.velocity;
 				projectile.FiredBy = gameObject;
 				projectile.Target = null;

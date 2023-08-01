@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Projectile : PoolableObject
+public abstract class Projectile : MonoBehaviour
 {
     [field: SerializeField]
     public float Speed { get; private set; }
@@ -41,8 +41,11 @@ public abstract class Projectile : PoolableObject
     public Transform Target { get; set; }
     public Vector3 InheritedVelocity { get; set; }
 
+    [SerializeField]
     protected float _elapsedTime;
+    [SerializeField]
     protected float _elapsedRange;
+    [SerializeField]
     protected int _numImpacts;
 
     public virtual void OnHit(GameObject hitObject)
@@ -52,23 +55,17 @@ public abstract class Projectile : PoolableObject
         ++_numImpacts;
         if (_numImpacts > Penetration)
         { 
-            ObjectPool.Instance.ReleaseInstance(this);
+            ObjectPool.Instance.ReleaseObject(this.gameObject);
         }
     }
 
     public virtual void OnMiss()
     {
-        ObjectPool.Instance.ReleaseInstance(this);
+        ObjectPool.Instance.ReleaseObject(this.gameObject);
     }
 
-	private void Awake()
-	{
-        Init();
-	}
-
-    public override void OnRequested()
+    private void OnEnable()
     {
-        base.OnRequested();
         Init();
     }
 

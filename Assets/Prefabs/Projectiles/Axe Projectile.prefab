@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3110196032089065457
 Transform:
   m_ObjectHideFlags: 0
@@ -40,18 +40,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3110196032089065456}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09be4876d8d0426468a39406eb9b2b4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shouldToggleActiveness: 1
-  _onReclaimed:
-    m_PersistentCalls:
-      m_Calls: []
-  _onRequested:
-    m_PersistentCalls:
-      m_Calls: []
   <Speed>k__BackingField: 6
   _sizeMod: 1
   <Range>k__BackingField: -1
@@ -63,6 +56,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   <ArtRoot>k__BackingField: {fileID: 3110196034043509062}
+  _elapsedTime: 0
+  _elapsedRange: 0
+  _numImpacts: 0
   _rb2d: {fileID: 8151151876623589347}
 --- !u!50 &8151151876623589347
 Rigidbody2D:

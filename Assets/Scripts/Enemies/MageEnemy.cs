@@ -185,7 +185,10 @@ public class MageEnemy : Enemy
 			// Shoot the fire ball at the player.
 			var position = _fireOrigin.position + DirectionToPlayer * 0.5F;
 
-			var projectile = ObjectPool.Instance.RequestInstance<Projectile>(_projectilePrefab, desiredPosition: position, desiredRight: DirectionToPlayer);
+			var projectile = ObjectPool.Instance.RequestObject(
+				_projectilePrefab.gameObject,
+				desiredPosition: position,
+				desiredDirection: DirectionToPlayer).GetComponent<Projectile>();
 			projectile.FiredBy = gameObject;
 			projectile.Target = null;
 		}

@@ -34,9 +34,10 @@ public class AxeFiringPattern : FiringPattern
 		{
 			var direction = ChooseRandomThrowingDirection();
 
-			var projectile = ObjectPool.Instance.RequestInstance<Projectile>(_projectilePrefab,
+			var projectile = ObjectPool.Instance.RequestObject(
+				_projectilePrefab.gameObject,
 				desiredPosition: FireOrigin.position,
-				desiredRight: direction);
+				desiredDirection: direction).GetComponent<Projectile>();
 			//projectile.InheritedVelocity = _rb2d.velocity;
 			projectile.FiredBy = gameObject;
 			projectile.Target = null;

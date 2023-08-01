@@ -3,62 +3,90 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public static ObjectPool Instance { get; private set; }
+    private Dictionary<string, Queue<GameObject>> _availableObjects;
 
-    private Dictionary<PoolableObject, Queue<PoolableObject>> _prefabInstances;
+    public static ObjectPool Instance { get; private set; }
 
     private void Awake()
     {
-        Debug.Assert(Instance == null, "ObjectPool.Awake: Attempted to create multiple instances of ObjectPool.");
+        if (Instance == null)
+        {
+            Instance = this;
 
-        Instance = this;
-        _prefabInstances = new Dictionary<PoolableObject, Queue<PoolableObject>>();
+            _availableObjects = new Dictionary<string, Queue<GameObject>>();
+        }
+        else
+        {
+            Debug.LogError($"Attempted to make another ObjectPool instance {this.name}!");
+            Destroy(this.transform.root.gameObject);
+        }
     }
 
-    public T RequestInstance<T>(PoolableObject prefab,
-        Transform desiredParent = null, Vector3? desiredPosition = null, Vector3? desiredRight = null) where T : Component
+    public GameObject RequestObject(
+        GameObject objectPrefab,
+        Vector3? desiredPosition = null,
+        Vector3? desiredDirection = null,
+        Transform desiredParent = null
+    )
     {
-        _prefabInstances.TryGetValue(prefab, out var freeInstances);
+        // Adding the instance ID so that the prefabs can (but really shouldn't) have the same name.
+        var key = $"{objectPrefab.name} - {objectPrefab.GetInstanceID()}";
+        Debug.Log($"Requesting resource {key}.");
 
-        PoolableObject prefabInstance;
-        if (freeInstances?.Count > 0)
+        GameObject myObject;
+        if (_availableObjects.TryGetValue(key, out var queue) && queue.Count > 0)  // For some reason sometimes this queue can be empty.
         {
-            prefabInstance = freeInstances.Dequeue();
-            if (freeInstances.Count <= 0)
+            myObject = queue.Dequeue();
+            if (queue.Count <= 0)
             {
-                _prefabInstances.Remove(prefab);
+                _availableObjects.Remove(key);
             }
         }
         else
         {
-            prefabInstance = Instantiate(prefab, desiredParent ?? this.transform);
-            prefabInstance.Prefab = prefab;
+            // TODO: First Awake/Start/OnEnabled called without the desired position/direction.
+            myObject = Instantiate(objectPrefab, desiredParent ?? this.transform);
+            myObject.name = key;
         }
 
-        if (desiredPosition.HasValue)
+        if (desiredPosition != null)
         {
-            prefabInstance.transform.position = desiredPosition.Value;
+            myObject.transform.position = desiredPosition.Value;
         }
-        if (desiredRight.HasValue)
+        if (desiredDirection != null)
         {
-            prefabInstance.transform.right = desiredRight.Value;
+            myObject.transform.right = desiredDirection.Value;
         }
 
-        prefabInstance.OnRequested();
+        if (!myObject.activeInHierarchy)
+        {
+            myObject.SetActive(true);
+        }
 
-        return prefabInstance.transform.GetComponent<T>();
+        return myObject;
     }
 
-    public void ReleaseInstance(PoolableObject prefabInstance)
+    // You should only call ReleaseObject on GameObjects created using RequestObject.
+    public void ReleaseObject(GameObject myObject)
     {
-        var prefab = prefabInstance.Prefab;
-        if (!_prefabInstances.TryGetValue(prefab, out var freeInstances))
-        {
-            freeInstances = new Queue<PoolableObject>();
-            _prefabInstances.Add(prefab, freeInstances);
-        }
-        freeInstances.Enqueue(prefabInstance);
+        Debug.Log($"Releasing resource {myObject.name}.");
 
-        prefabInstance.OnReclaimed();
+        if (!_availableObjects.TryGetValue(myObject.name, out var queue))
+        {
+            // TODO: Consider visually representing this by creating a root GameObject for all instances of this prefab.
+            queue = new Queue<GameObject>();
+            _availableObjects.Add(myObject.name, queue);
+        }
+        myObject.SetActive(false);
+        queue.Enqueue(myObject);
+    }
+
+    public void DoCleanup()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+        _availableObjects.Clear();
     }
 }
