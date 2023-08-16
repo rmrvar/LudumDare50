@@ -1,37 +1,22 @@
 using UnityEngine;
 
-public class UpgradeManager : MonoBehaviour
+public class UpgradeManager : MonoSingleton<UpgradeManager>
 {
-    public static UpgradeManager Instance { get; private set; }
-
-	private void Awake()
-    {
-        Debug.Assert(Instance == null, "UpgradeManager.Awake: Attempted to create multiple instances of UpgradeManager.");
-
-        Instance = this;
-
-		_spawner = GameObject.FindObjectOfType<SpawnOnTimer>();
-    }
-
 	private KnifeFiringPattern _knifeInfo;
 	private AxeFiringPattern _axeInfo;
 
-	private void Start()
+	protected override void SingletonStart()
 	{
 		_knifeInfo = Component.FindObjectOfType<KnifeFiringPattern>();
 		_axeInfo = Component.FindObjectOfType<AxeFiringPattern>();
 	}
 
-	[SerializeField] private UpgradePickup _theKnife = default;
-	[SerializeField] private UpgradePickup _theAxe = default;
-	[SerializeField] private SpawnOnTimer _spawner = default;
 	internal void RegisterUpgrade(string weaponType)
 	{
 		if (weaponType == "Special Knife")
 		{
 			UpgradeDagger();
-			Destroy(_theAxe.gameObject);
-			_spawner.enabled = true;
+			PlayManager.Instance.StartGameplay();
 		} else
 		if (weaponType == "Knife")
 		{
@@ -40,8 +25,7 @@ public class UpgradeManager : MonoBehaviour
 		if (weaponType == "Special Axe")
 		{
 			UpgradeAxe();
-			Destroy(_theKnife.gameObject);
-			_spawner.enabled = true;
+			PlayManager.Instance.StartGameplay();
 		} else
 		if (weaponType == "Axe")
 		{

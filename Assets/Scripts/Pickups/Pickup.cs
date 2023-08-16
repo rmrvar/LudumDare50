@@ -15,7 +15,7 @@ public abstract class Pickup : MonoBehaviour
 		if (gameObject.tag == "Player")
 		{  // The pickups should be on a separate layer that can only collide with players anyway, but let's be safe.
 			PickUp(gameObject);
-			_alreadyPickedUp = true; ;
+			_alreadyPickedUp = true;
 		}
 		Destroy(this.gameObject);
 	}

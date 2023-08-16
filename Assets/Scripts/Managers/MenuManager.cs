@@ -2,26 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuManager : MonoBehaviour
+public class MenuManager : MonoSingleton<MenuManager>
 {
     [SerializeField] private string _startMenuScene = default;
     [SerializeField] private string _gameScene = default;
     [SerializeField] private string _gameOverMenuScene = default;
-
-    public static MenuManager Instance { get; private set; }
-
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Debug.LogError("Attempted to create multiple instances of MenuManager!");
-
-            Destroy(this);
-            return;
-        }
-
-        Instance = this;
-    }
+    [SerializeField] private string _winMenuScene = default;
 
     public void LoadStartMenu(float delay = 0)
     {
@@ -35,6 +21,13 @@ public class MenuManager : MonoBehaviour
         Debug.Log("Loading Game Over Screen!");
 
         LoadSceneWithDelay(_gameOverMenuScene, delay);
+    }
+
+    public void LoadWinMenu(float delay = 0)
+    {
+        Debug.Log("Loading Win Screen!");
+
+        LoadSceneWithDelay(_winMenuScene, delay);
     }
 
     public void LoadGame(float delay = 0)
