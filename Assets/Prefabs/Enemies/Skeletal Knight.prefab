@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 100
-  _currHealth: 100
+  <CurrHealth>k__BackingField: 0
   _timeInvulnerableAfterHit: 0.02
   _shouldResurrectTriggerInvulnerability: 1
 --- !u!58 &1858672548986633674
@@ -182,7 +182,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!70 &1858672548986633678
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -192,7 +192,7 @@ MonoBehaviour:
   <MaxDamage>k__BackingField: 10
   <HitLayer>k__BackingField:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 72
   <ArtRoot>k__BackingField: {fileID: 2889691710216543982}
   _elapsedTime: 0
   _elapsedRange: 0
