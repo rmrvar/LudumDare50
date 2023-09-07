@@ -38,7 +38,7 @@ public abstract class Enemy : MonoBehaviour
 		_target = GameObject.FindWithTag("Player").transform;
 		CalculateDesiredHeading();
 
-		_health.OnResurrected += OnResurrected;
+		_health.OnRevived += OnResurrected;
 	}
 
 	protected virtual void OnEnable()
@@ -57,7 +57,7 @@ public abstract class Enemy : MonoBehaviour
 
 	protected virtual void OnDestroy()
 	{
-		_health.OnResurrected -= OnResurrected;  // Unlike the other callbacks, this has to happen when the enemy is dead (and disabled).
+		_health.OnRevived -= OnResurrected;  // Unlike the other callbacks, this has to happen when the enemy is dead (and disabled).
 	}
 
 	protected void CalculateDesiredHeading()

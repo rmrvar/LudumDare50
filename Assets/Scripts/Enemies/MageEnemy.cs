@@ -160,9 +160,9 @@ public class MageEnemy : Enemy
 		if (_isResurrecting)
 		{
 			var corpses = Physics2D.OverlapCircleAll(transform.position, _avoidanceRadius, _avoidanceLayer)
-						   .Where(x => x.gameObject.tag == "Corpse")
-						   .Select(x => x.gameObject)
-						   .Distinct().ToList();
+				.Where(x => x.gameObject.tag == "Corpse")
+				.Select(x => x.gameObject)
+				.Distinct().ToList();
 			var rezCount = Mathf.Min(corpses.Count, _maxResurrects);
 			for (int i = 0; i < rezCount; ++i)
 			{

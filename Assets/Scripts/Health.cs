@@ -78,7 +78,7 @@ public class Health : MonoBehaviour
 			_invulnerabilityTimer = _timeInvulnerableAfterHit;
 		}
 
-		OnResurrected?.Invoke();
+		OnRevived?.Invoke();
 	}
 
 	private void Update()
@@ -89,5 +89,5 @@ public class Health : MonoBehaviour
 	public event Action<GameObject> OnKilled;
 	public event Action<GameObject> OnDamaged;
 	public event Action OnHealed;
-	public event Action OnResurrected;
+	public event Action OnRevived;
 }
