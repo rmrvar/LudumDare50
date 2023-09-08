@@ -2,23 +2,25 @@ namespace Ai
 {
     public class Add : LeafNode
     {
-        private string _writeTo;
-        private string[] _readFrom;
+        private string _outputTo;
+        private Argument<float>[] _arguments;
 
-        public Add(string writeTo, string[] readFrom)
+        public Add(string outputTo, Argument<float>[] arguments)
         {
-            _writeTo = writeTo;
-            _readFrom = readFrom;
+            _outputTo = outputTo;
+            _arguments = arguments;
         }
 
         public override void Process(float dt, Context context)
         {
-            int sum = 0;
-            foreach (var key in _readFrom)
+            base.Process(dt, context);
+
+            float sum = 0;
+            foreach (var arg in _arguments)
             {
-                sum += context.Get<int>(key);
+                sum += arg.Get(context);
             }
-            context.Set(_writeTo, sum);
+            context.Set(_outputTo, sum);
 
             OnCompleted(State.SUCCESS, context);
         }

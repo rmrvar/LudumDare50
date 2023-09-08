@@ -6,20 +6,38 @@ public class SkeletalMageBrain : ComputerBrain
         new BehaviourTree(
             new Repeat(3,
                 new Sequence(
+                    //new RandomNumber(
+                    //    "input1",
+                    //    Argument<float>.FromValue(1),
+                    //    Argument<float>.FromValue(10)
+                    //  ),
+                    //new RandomNumber(
+                    //    "input2",
+                    //    Argument<float>.FromValue(1),
+                    //    Argument<float>.FromValue(10)
+                    //  ),
                     new Add(
                         "output1",
                         new[] {
-                            "input1",
-                            "input2"
+                            //Argument<float>.FromKey("input1"),
+                            //Argument<float>.FromKey("input2")
+                            Argument<float>.FromValue(1),
+                            Argument<float>.FromValue(3),
                           }
                       ),
                     new Multiply(
                         "output2",
                         new[] {
-                            "output1",
-                            "input3"
+                            Argument<float>.FromKey("output1"),
+                            Argument<float>.FromValue(10)
                           }
-                      )
+                      ),
+                    new RandomNumber(
+                        "wait_for",
+                        Argument<float>.FromValue(1),
+                        Argument<float>.FromValue(3)
+                      ),
+                    new WaitForSeconds(Argument<float>.FromKey("wait_for"))
                   )
               )
           );

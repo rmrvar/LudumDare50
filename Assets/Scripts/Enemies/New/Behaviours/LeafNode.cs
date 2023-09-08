@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Ai
 {
     public abstract class LeafNode : Node
@@ -9,7 +11,10 @@ namespace Ai
             context.StartProcessingNode(this);
         }
 
-        public abstract void Process(float dt, Context context);
+        public virtual void Process(float dt, Context context)
+        {
+            Debug.Log($"{_nodeId} in progress!");
+        }
 
         protected override void OnCompleted(State state, Context context)
         {

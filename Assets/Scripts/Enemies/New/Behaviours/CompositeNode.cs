@@ -4,7 +4,7 @@ namespace Ai
 {
     public abstract class CompositeNode : Node
     {
-        public CompositeNode(params Node[] children)
+        public CompositeNode(params Node[] children) : base()
         {
             Children = children;
         }
@@ -50,6 +50,8 @@ namespace Ai
         protected virtual void OnChildCompleted(Node node, State state, Context context)
         {
             Debug.Assert(state != State.RUNNING, $"Completed Child {node} is still running!");
+
+            Debug.Log($"{_nodeId} has had child complete with state {state}.");
         }
     }
 }

@@ -62,7 +62,7 @@ namespace Ai
                 return;
             }
 
-            var timesCompleted = context.GetNodeValue<int>(this, Key.TIMES_COMPLETED);
+            var timesCompleted = context.GetNodeValue<int>(node, Key.TIMES_COMPLETED);
             if (timesCompleted < _n)
             {
                 ResetAndRestartChild(context);

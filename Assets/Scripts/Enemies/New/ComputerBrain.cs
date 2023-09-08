@@ -9,6 +9,7 @@ public class ComputerBrain : Brain
     protected override void Awake()
     {
         base.Awake();
+        _context = new Context();
     }
 
     protected override void Update()

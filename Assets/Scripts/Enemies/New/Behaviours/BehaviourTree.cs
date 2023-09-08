@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Ai
 {
     public class BehaviourTree
@@ -18,7 +20,8 @@ namespace Ai
             }
             else
             {
-                foreach (var node in context.NodesToProcess())
+                var nodesToProcess = context.NodesToProcess().ToList();
+                foreach (var node in nodesToProcess)
                 {
                     node.Process(dt, context);
                 }

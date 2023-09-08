@@ -11,11 +11,11 @@ public class Brain : MonoBehaviour
 
     protected virtual void Update()
     {
-        // TODO: This does not return early in the derived functions.
-        if (!Pawn.CanControl)
-        {
-            return;
-        }
+        //// TODO: This does not return early in the derived functions.
+        //if (!Pawn.CanControl)
+        //{
+        //    return;
+        //}
     }
 
     protected virtual void LateUpdate()

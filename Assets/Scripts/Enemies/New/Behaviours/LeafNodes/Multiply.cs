@@ -2,23 +2,25 @@ namespace Ai
 {
     public class Multiply : LeafNode
     {
-        private string _writeTo;
-        private string[] _readFrom;
+        private string _outputTo;
+        private Argument<float>[] _arguments;
 
-        public Multiply(string writeTo, string[] readFrom)
+        public Multiply(string outputTo, Argument<float>[] arguments)
         {
-            _writeTo = writeTo;
-            _readFrom = readFrom;
+            _outputTo = outputTo;
+            _arguments = arguments;
         }
 
         public override void Process(float dt, Context context)
         {
-            int sum = 1;
-            foreach (var key in _readFrom)
+            base.Process(dt, context);
+
+            float product = 1;
+            foreach (var arg in _arguments)
             {
-                sum *= context.Get<int>(key);
+                product *= arg.Get(context);
             }
-            context.Set(_writeTo, sum);
+            context.Set(_outputTo, product);
 
             OnCompleted(State.SUCCESS, context);
         }
