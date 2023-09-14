@@ -11,9 +11,9 @@ namespace Ai
             context.StartProcessingNode(this);
         }
 
-        public override void Stop(Context context)
+        public override void Abort(Context context)
         {
-            base.Stop(context);
+            base.Abort(context);
 
             context.StopProcessingNode(this);
         }

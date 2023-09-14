@@ -34,23 +34,23 @@ namespace Ai
         #endregion
 
         #region ---- Stop ----
-        public sealed override void Stop(Context context)
+        public sealed override void Abort(Context context)
         {
-            base.Stop(context);
+            base.Abort(context);
 
-            StopSelf(context);
-            StopChildren(context);
+            AbortSelf(context);
+            AbortChildren(context);
         }
 
-        protected virtual void StopSelf(Context context)
+        protected virtual void AbortSelf(Context context)
         {
         }
 
-        protected virtual void StopChildren(Context context)
+        protected virtual void AbortChildren(Context context)
         {
             foreach (var child in Children)
             {
-                child.Stop(context);
+                child.Abort(context);
             }
         }
         #endregion

@@ -28,9 +28,9 @@ namespace Ai
                         node,
                         Node.Key.STATE
                       );
-                    if (state == Node.State.INTERRUPT)
+                    if (state == Node.State.ABORTED)
                     {
-                        // INTERRUPT occurs when the Parallel node completes and cancels any still running nodes.
+                        // ABORTED occurs when the Parallel node completes and cancels any still running nodes.
                         // The node was removed in the original list, so ignore it.
                         continue;
                     }

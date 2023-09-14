@@ -22,7 +22,7 @@ namespace Ai
             // The below three states represent COMPLETION.
             SUCCESS,
             FAILURE,
-            INTERRUPT
+            ABORTED,
         }
 
         private static int _nodeCount = 0;
@@ -68,11 +68,11 @@ namespace Ai
             }
         }
 
-        public virtual void Stop(Context context)
+        public virtual void Abort(Context context)
         {
-            Debug.Log($"Context {context.Id} node {_nodeId} stopped!");
+            Debug.Log($"Context {context.Id} node {_nodeId} aborted!");
 
-            context.SetNodeValue(this, Key.STATE, State.INTERRUPT);
+            context.SetNodeValue(this, Key.STATE, State.ABORTED);
         }
 
         public virtual void Reset(Context context)

@@ -50,7 +50,7 @@ namespace Ai
             {
                 if (child != node)
                 {
-                    child.Stop(context);
+                    child.Abort(context);
                 }
             }
             OnCompleted(State.SUCCESS, context);
