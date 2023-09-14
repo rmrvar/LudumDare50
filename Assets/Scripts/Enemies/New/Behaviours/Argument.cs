@@ -1,43 +1,73 @@
 namespace Ai
 {
-    public class Argument<T>
+    public static class Argument
     {
-        private bool _isDirect;
-        private string _key;
-        private T _value;
-
-        private Argument()
+        public static ArgumentFromKey<T> FromKey<T>(string key)
         {
-        }
-
-        public static Argument<T> FromKey(string name)
-        {
-            return new Argument<T>()
+            return new ArgumentFromKey<T>()
             {
-                _isDirect = false,
-                _key = name
+                Key = key
             };
         }
 
-        public static Argument<T> FromValue(T value)
+        public static ArgumentFromValue<T> FromValue<T>(T value)
         {
-            return new Argument<T>()
+            return new ArgumentFromValue<T>()
             {
-                _isDirect = true,
-                _value = value
+                Value = value
             };
         }
+
+        public interface In<T>
+        {
+            T Get(Context context);
+        }
+
+        public interface Out<T>
+        {
+            void Set(T value, Context context);
+        }
+
+        public interface InOut<T>
+        {
+            T Get(Context context);
+            void Set(T value, Context context);
+        }
+    }
+
+    public sealed class ArgumentFromValue<T> : Argument.In<T>
+    {
+        public ArgumentFromValue()
+        {
+        }
+
+        public T Value { get; set; }
 
         public T Get(Context context)
         {
-            if (_isDirect)
-            {
-                return _value;
-            }
-            else
-            {
-                return context.Get<T>(_key);
-            }
+            return Value;
+        }
+    }
+
+    public sealed class ArgumentFromKey<T>
+        : Argument.In<T>
+        , Argument.Out<T>
+        , Argument.InOut<T>
+    {
+        public ArgumentFromKey()
+        {
+        }
+
+        public string Key { get; set; }
+
+        public T Get(Context context)
+        {
+            return context.Get<T>(Key);
+        }
+
+        public void Set(T value, Context context)
+        {
+            context.Set(Key, value);
         }
     }
 }

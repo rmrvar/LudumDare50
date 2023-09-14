@@ -2,10 +2,10 @@ namespace Ai
 {
     public class Multiply : LeafNode
     {
-        private string _outputTo;
-        private Argument<float>[] _arguments;
+        private Argument.Out<float> _outputTo;
+        private Argument.In<float>[] _arguments;
 
-        public Multiply(string outputTo, Argument<float>[] arguments)
+        public Multiply(Argument.Out<float> outputTo, Argument.In<float>[] arguments)
         {
             _outputTo = outputTo;
             _arguments = arguments;
@@ -20,7 +20,7 @@ namespace Ai
             {
                 product *= arg.Get(context);
             }
-            context.Set(_outputTo, product);
+            _outputTo.Set(product, context);
 
             OnCompleted(State.SUCCESS, context);
         }

@@ -4,9 +4,9 @@ namespace Ai
     {
         private const string TIME_ELAPSED = "TimeElapsed";
 
-        private Argument<float> _secondsToWaitFor;
+        private Argument.In<float> _secondsToWaitFor;
 
-        public WaitForSeconds(Argument<float> secondsToWaitFor)
+        public WaitForSeconds(Argument.In<float> secondsToWaitFor)
         {
             _secondsToWaitFor = secondsToWaitFor;
         }

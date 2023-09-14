@@ -4,9 +4,9 @@ namespace Ai
 {
     public class PrintArgumentValue<T> : LeafNode
     {
-        private Argument<T> _arg;
+        private Argument.In<T> _arg;
 
-        public PrintArgumentValue(Argument<T> arg)
+        public PrintArgumentValue(Argument.In<T> arg)
         {
             _arg = arg;
         }

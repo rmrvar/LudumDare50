@@ -4,14 +4,14 @@ namespace Ai
 {
     public class RandomNumber : LeafNode
     {
-        private string _outputTo;
-        private Argument<float> _minInclusive;
-        private Argument<float> _maxInclusive;
+        private Argument.Out<float> _outputTo;
+        private Argument.In<float> _minInclusive;
+        private Argument.In<float> _maxInclusive;
 
         public RandomNumber(
-            string outputTo,
-            Argument<float> lowerBound,
-            Argument<float> upperBound
+            Argument.Out<float> outputTo,
+            Argument.In<float> lowerBound,
+            Argument.In<float> upperBound
           )
         {
             _outputTo = outputTo;
@@ -23,10 +23,10 @@ namespace Ai
         {
             base.Process(dt, context);
 
-            context.Set(_outputTo, Random.Range(
+            _outputTo.Set(Random.Range(
                 _minInclusive.Get(context),
                 _maxInclusive.Get(context)
-              ));
+              ), context);
             OnCompleted(State.SUCCESS, context);
         }
     }

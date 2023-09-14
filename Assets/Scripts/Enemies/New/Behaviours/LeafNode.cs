@@ -18,6 +18,7 @@ namespace Ai
             context.StopProcessingNode(this);
         }
 
+        // TODO: Add a Process function that is called every FixedUpdate.
         public virtual void Process(float dt, Context context)
         {
             Debug.Log($"Context {context.Id} node {_nodeId} in progress!");

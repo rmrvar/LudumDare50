@@ -2,10 +2,10 @@ namespace Ai
 {
     public class Add : LeafNode
     {
-        private string _outputTo;
-        private Argument<float>[] _arguments;
+        private Argument.Out<float> _outputTo;
+        private Argument.In<float>[] _arguments;
 
-        public Add(string outputTo, Argument<float>[] arguments)
+        public Add(Argument.Out<float> outputTo, Argument.In<float>[] arguments)
         {
             _outputTo = outputTo;
             _arguments = arguments;
@@ -20,7 +20,7 @@ namespace Ai
             {
                 sum += arg.Get(context);
             }
-            context.Set(_outputTo, sum);
+            _outputTo.Set(sum, context);
 
             OnCompleted(State.SUCCESS, context);
         }
