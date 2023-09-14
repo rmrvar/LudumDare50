@@ -7,18 +7,22 @@ namespace Ai
     {
         public static class Key
         {
+            // State will be set each tick in the Process method for LeafNodes and by callback for Composite/DecoratorNodes.
             public static string STATE = "State";
             public static string TIMES_STARTED = "TimesStarted";
             public static string TIMES_COMPLETED = "TimesCompleted";
             public static string NEXT_CHILD_INDEX = "NextChildIndex";
         }
 
+
         public enum State
         {
             NOT_STARTED,
-            SUCCESS,
             RUNNING,
-            FAILURE
+            // The below three states represent COMPLETION.
+            SUCCESS,
+            FAILURE,
+            INTERRUPT
         }
 
         private static int _nodeCount = 0;
@@ -33,7 +37,7 @@ namespace Ai
 
         public virtual void Start(Context context)
         {
-            Debug.Log($"{_nodeId} started!");
+            Debug.Log($"Context {context.Id} node {_nodeId} started!");
 
             context.SetNodeValue(this, Key.STATE, State.RUNNING);
 
@@ -64,9 +68,16 @@ namespace Ai
             }
         }
 
+        public virtual void Stop(Context context)
+        {
+            Debug.Log($"Context {context.Id} node {_nodeId} stopped!");
+
+            context.SetNodeValue(this, Key.STATE, State.INTERRUPT);
+        }
+
         public virtual void Reset(Context context)
         {
-            Debug.Log($"{_nodeId} reset!");
+            Debug.Log($"Context {context.Id} node {_nodeId} reset!");
 
             context.SetNodeValue(this, Key.STATE, State.NOT_STARTED);
         }
@@ -74,9 +85,8 @@ namespace Ai
         public event Action<State, Context> Completed;
         protected virtual void OnCompleted(State state, Context context)
         {
-            Debug.Log($"{_nodeId} completed with state {state}!");
+            Debug.Log($"Context {context.Id} node {_nodeId} completed with state {state}!");
 
-            // State will be set each tick in the Process method for LeafNodes and by callback for Composite/DecoratorNodes.
             context.SetNodeValue(this, Key.STATE, state);
 
             var timesCompleted = context.GetNodeValue<int>(

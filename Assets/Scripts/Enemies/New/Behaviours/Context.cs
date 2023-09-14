@@ -4,6 +4,9 @@ namespace Ai
 {
     public class Context
     {
+        private static int _idCounter = 0;
+        public int Id { get; private set; }
+
         private List<LeafNode> _nodesToProcess;
 
         private Dictionary<object, object> _blackboard;
@@ -12,11 +15,13 @@ namespace Ai
         {
             _nodesToProcess = new List<LeafNode>();
             _blackboard = new Dictionary<object, object>();
+
+            Id = ++_idCounter;
         }
 
         public bool HasStarted { get; set; }
 
-        #region --- User data section ---
+        #region --- Tree data section ---
         public bool Has(string key)
         {
             return _blackboard.ContainsKey(key);

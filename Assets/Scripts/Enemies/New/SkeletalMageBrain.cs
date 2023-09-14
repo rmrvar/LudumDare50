@@ -32,6 +32,9 @@ public class SkeletalMageBrain : ComputerBrain
                             Argument<float>.FromValue(10)
                           }
                       ),
+                    //new PrintArgumentValue<float>(Argument<float>.FromKey("input1")),
+                    //new PrintArgumentValue<float>(Argument<float>.FromKey("input2")),
+                    new PrintArgumentValue<float>(Argument<float>.FromKey("output2")),
                     new RandomNumber(
                         "wait_for",
                         Argument<float>.FromValue(1),

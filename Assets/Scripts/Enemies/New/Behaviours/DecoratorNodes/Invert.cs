@@ -6,9 +6,8 @@ namespace Ai
         {
         }
 
-        public override void Start(Context context)
+        protected override void StartChildren(Context context)
         {
-            base.Start(context);
             Child.Start(context);
         }
 

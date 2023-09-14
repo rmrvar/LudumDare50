@@ -6,19 +6,19 @@ namespace Ai
         {
         }
 
-        public override void Start(Context context)
+        protected override void StartSelf(Context context)
         {
-            base.Start(context);
+            context.SetNodeValue(this, Node.Key.NEXT_CHILD_INDEX, 1);
+        }
 
-            SetNextChildIndex(context, 1);
+        protected override void StartChildren(Context context)
+        {
             Children[0].Start(context);
         }
 
-        public override void Reset(Context context)
+        protected override void ResetSelf(Context context)
         {
             context.UnsetNodeValue(this, Node.Key.NEXT_CHILD_INDEX);
-
-            base.Reset(context);
         }
 
         protected override void OnChildCompleted(Node node, State state, Context context)
@@ -37,7 +37,11 @@ namespace Ai
             }
             else
             {
-                SetNextChildIndex(context, childIndex + 1);
+                context.SetNodeValue(
+                    this,
+                    Node.Key.NEXT_CHILD_INDEX,
+                    childIndex + 1
+                  );
                 Children[childIndex].Start(context);
             }
         }

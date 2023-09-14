@@ -21,10 +21,8 @@ namespace Ai
             _n = n;
         }
 
-        public override void Start(Context context)
+        protected override void StartSelf(Context context)
         {
-            base.Start(context);
-
             if (_n > 0)
             {
                 int stopRepeatingAt = _n;
@@ -41,15 +39,16 @@ namespace Ai
                     stopRepeatingAt
                   );
             }
+        }
 
+        protected override void StartChildren(Context context)
+        {
             Child.Start(context);
         }
 
-        public override void Reset(Context context)
+        protected override void ResetSelf(Context context)
         {
             context.UnsetNodeValue(this, STOP_REPEATING_AT);
-
-            base.Reset(context);
         }
 
         protected override void OnChildCompleted(Node node, State state, Context context)

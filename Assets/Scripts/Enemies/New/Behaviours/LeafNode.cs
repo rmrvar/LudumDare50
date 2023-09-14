@@ -11,9 +11,16 @@ namespace Ai
             context.StartProcessingNode(this);
         }
 
+        public override void Stop(Context context)
+        {
+            base.Stop(context);
+
+            context.StopProcessingNode(this);
+        }
+
         public virtual void Process(float dt, Context context)
         {
-            Debug.Log($"{_nodeId} in progress!");
+            Debug.Log($"Context {context.Id} node {_nodeId} in progress!");
         }
 
         protected override void OnCompleted(State state, Context context)

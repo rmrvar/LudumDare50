@@ -1,4 +1,5 @@
 using System.Linq;
+using UnityEngine;
 
 namespace Ai
 {
@@ -23,6 +24,22 @@ namespace Ai
                 var nodesToProcess = context.NodesToProcess().ToList();
                 foreach (var node in nodesToProcess)
                 {
+                    var state = context.GetNodeValue<Node.State>(
+                        node,
+                        Node.Key.STATE
+                      );
+                    if (state == Node.State.INTERRUPT)
+                    {
+                        // INTERRUPT occurs when the Parallel node completes and cancels any still running nodes.
+                        // The node was removed in the original list, so ignore it.
+                        continue;
+                    }
+
+                    Debug.Assert(
+                        state == Node.State.RUNNING,
+                        "Behaviour tree processed node in invalid state!"
+                      );
+
                     node.Process(dt, context);
                 }
             }
