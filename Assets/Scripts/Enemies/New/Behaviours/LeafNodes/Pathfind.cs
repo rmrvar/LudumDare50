@@ -7,12 +7,12 @@ namespace Ai
     {
         private Argument.In<Transform> _transformArg;
         private Argument.In<Transform> _targetTransformArg;
-        private Argument.Out<Vector3> _outputDirectionArg;
+        private Argument.Out<Vector2> _outputDirectionArg;
 
         public Pathfind(
             Argument.In<Transform> transform,
             Argument.In<Transform> targetTransform,
-            Argument.Out<Vector3> outputDirection
+            Argument.Out<Vector2> outputDirection
           )
         {
             _transformArg = transform;

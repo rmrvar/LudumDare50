@@ -4,6 +4,18 @@ namespace Ai
 {
     public class DetectObstacles : LeafNode
     {
+        public static Vector2[] Directions = new Vector2[8]
+        {
+            new Vector2( 0, +1),
+            new Vector2(+1, +1),
+            new Vector2(+1,  0),
+            new Vector2(+1, -1),
+            new Vector2( 0, -1),
+            new Vector2(-1, -1),
+            new Vector2(-1,  0),
+            new Vector2(-1, +1),
+        };
+
         private Argument.In<Transform> _transformArg;
         private Argument.In<LayerMask> _rayLayerMaskArg;
         private Argument.In<float> _rayDistanceArg;
@@ -32,21 +44,21 @@ namespace Ai
             int rayLayerMask = _rayLayerMaskArg.Get(context).value;
 
             outputBuffer[0] = TestRayDirection(
-                transform.position, new Vector3( 0, +1), rayDistance, rayLayerMask);
+                transform.position, Directions[0], rayDistance, rayLayerMask);
             outputBuffer[1] = TestRayDirection(
-                transform.position, new Vector3(+1, +1), rayDistance, rayLayerMask);
+                transform.position, Directions[1], rayDistance, rayLayerMask);
             outputBuffer[2] = TestRayDirection(
-                transform.position, new Vector3(+1,  0), rayDistance, rayLayerMask);
+                transform.position, Directions[2], rayDistance, rayLayerMask);
             outputBuffer[3] = TestRayDirection(
-                transform.position, new Vector3(+1, -1), rayDistance, rayLayerMask);
+                transform.position, Directions[3], rayDistance, rayLayerMask);
             outputBuffer[4] = TestRayDirection(
-                transform.position, new Vector3( 0, -1), rayDistance, rayLayerMask);
+                transform.position, Directions[4], rayDistance, rayLayerMask);
             outputBuffer[5] = TestRayDirection(
-                transform.position, new Vector3(-1, -1), rayDistance, rayLayerMask);
+                transform.position, Directions[5], rayDistance, rayLayerMask);
             outputBuffer[6] = TestRayDirection(
-                transform.position, new Vector3(-1,  0), rayDistance, rayLayerMask);
+                transform.position, Directions[6], rayDistance, rayLayerMask);
             outputBuffer[7] = TestRayDirection(
-                transform.position, new Vector3(-1, +1), rayDistance, rayLayerMask);
+                transform.position, Directions[7], rayDistance, rayLayerMask);
         }
 
         private float TestRayDirection(

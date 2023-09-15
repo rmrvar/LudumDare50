@@ -72,8 +72,8 @@ public class SkeletalMageBrain : ComputerBrain
         = Argument.FromKey<float[]>("FeelerOutputBuffer");
     private static ArgumentFromKey<Transform> _targetTransformArg
         = Argument.FromKey<Transform>("TargetTransform");
-    private static ArgumentFromKey<Vector3> _desiredDirectionArg
-        = Argument.FromKey<Vector3>("DesiredDirection");
+    private static ArgumentFromKey<Vector2> _desiredDirectionArg
+        = Argument.FromKey<Vector2>("DesiredDirection");
 
     private static BehaviourTree _skeletalMageBehaviourTree =
         new BehaviourTree(
@@ -89,9 +89,14 @@ public class SkeletalMageBrain : ComputerBrain
                     _targetTransformArg,
                     _desiredDirectionArg
                   ),
-                new MoveTo(
+                //new MoveTo(
+                //    _transformArg,
+                //    _targetTransformArg
+                //  )
+                new Move(
                     _transformArg,
-                    _targetTransformArg
+                    _desiredDirectionArg,
+                    _feelerOutputBufferArg
                   )
               )
           );
@@ -118,16 +123,17 @@ public class SkeletalMageBrain : ComputerBrain
             return;
         }
 
+        var directions = DetectObstacles.Directions;
         var feelerOutputBuffer = _feelerOutputBufferArg.Get(_context);
 
-        Debug.DrawRay(transform.position, new Vector2( 0, +1) * -feelerOutputBuffer[0], Color.red);
-        Debug.DrawRay(transform.position, new Vector2(+1, +1) * -feelerOutputBuffer[1], Color.red);
-        Debug.DrawRay(transform.position, new Vector2(+1,  0) * -feelerOutputBuffer[2], Color.red);
-        Debug.DrawRay(transform.position, new Vector2(+1, -1) * -feelerOutputBuffer[3], Color.red);
-        Debug.DrawRay(transform.position, new Vector2( 0, -1) * -feelerOutputBuffer[4], Color.red);
-        Debug.DrawRay(transform.position, new Vector2(-1, -1) * -feelerOutputBuffer[5], Color.red);
-        Debug.DrawRay(transform.position, new Vector2(-1,  0) * -feelerOutputBuffer[6], Color.red);
-        Debug.DrawRay(transform.position, new Vector2(-1, +1) * -feelerOutputBuffer[7], Color.red);
+        Debug.DrawRay(transform.position, directions[0] * -feelerOutputBuffer[0], Color.red);
+        Debug.DrawRay(transform.position, directions[1] * -feelerOutputBuffer[1], Color.red);
+        Debug.DrawRay(transform.position, directions[2] * -feelerOutputBuffer[2], Color.red);
+        Debug.DrawRay(transform.position, directions[3] * -feelerOutputBuffer[3], Color.red);
+        Debug.DrawRay(transform.position, directions[4] * -feelerOutputBuffer[4], Color.red);
+        Debug.DrawRay(transform.position, directions[5] * -feelerOutputBuffer[5], Color.red);
+        Debug.DrawRay(transform.position, directions[6] * -feelerOutputBuffer[6], Color.red);
+        Debug.DrawRay(transform.position, directions[7] * -feelerOutputBuffer[7], Color.red);
 
         var desiredDirection = _desiredDirectionArg.Get(_context);
 
